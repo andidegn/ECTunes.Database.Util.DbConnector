@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ECTunes.Database.Config.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ECTunesDatabaseConfigStoreContainer">
+          <EntitySet Name="Car" EntityType="ECTunes.Database.Config.Store.Car" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customer" EntityType="ECTunes.Database.Config.Store.Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Param" EntityType="ECTunes.Database.Config.Store.Param" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Signal" EntityType="ECTunes.Database.Config.Store.Signal" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Car__customerId__00551192" Association="ECTunes.Database.Config.Store.FK__Car__customerId__00551192">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Param__carId__03317E3D" Association="ECTunes.Database.Config.Store.FK__Param__carId__03317E3D">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Param" EntitySet="Param" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Signal__carId__07F6335A" Association="ECTunes.Database.Config.Store.FK__Signal__carId__07F6335A">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Signal" EntitySet="Signal" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="carId" />
+          </Key>
+          <Property Name="customerId" Type="int" Nullable="false" />
+          <Property Name="carId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="version" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="customerId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Param">
+          <Key>
+            <PropertyRef Name="carId" />
+            <PropertyRef Name="path" />
+          </Key>
+          <Property Name="carId" Type="int" Nullable="false" />
+          <Property Name="path" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="subPath" Type="varchar" MaxLength="15" />
+          <Property Name="value" Type="int" />
+        </EntityType>
+        <EntityType Name="Signal">
+          <Key>
+            <PropertyRef Name="carId" />
+            <PropertyRef Name="signalId" />
+          </Key>
+          <Property Name="carId" Type="int" Nullable="false" />
+          <Property Name="signalId" Type="int" Nullable="false" />
+          <Property Name="type" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="startbit" Type="int" Nullable="false" />
+          <Property Name="size" Type="int" Nullable="false" />
+          <Property Name="format" Type="char" MaxLength="1" />
+          <Property Name="signed" Type="char" MaxLength="1" />
+          <Property Name="factor" Type="float" />
+          <Property Name="offset" Type="int" />
+          <Property Name="min" Type="float" />
+          <Property Name="max" Type="int" />
+          <Property Name="match" Type="int" />
+        </EntityType>
+        <Association Name="FK__Car__customerId__00551192">
+          <End Role="Customer" Type="ECTunes.Database.Config.Store.Customer" Multiplicity="1" />
+          <End Role="Car" Type="ECTunes.Database.Config.Store.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="customerId" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Param__carId__03317E3D">
+          <End Role="Car" Type="ECTunes.Database.Config.Store.Car" Multiplicity="1" />
+          <End Role="Param" Type="ECTunes.Database.Config.Store.Param" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="carId" />
+            </Principal>
+            <Dependent Role="Param">
+              <PropertyRef Name="carId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Signal__carId__07F6335A">
+          <End Role="Car" Type="ECTunes.Database.Config.Store.Car" Multiplicity="1" />
+          <End Role="Signal" Type="ECTunes.Database.Config.Store.Signal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="carId" />
+            </Principal>
+            <Dependent Role="Signal">
+              <PropertyRef Name="carId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ECTunes.Database.Config" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ECTunesDatabaseConfig" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Car" EntityType="ECTunes.Database.Config.Car" />
+          <EntitySet Name="Customer" EntityType="ECTunes.Database.Config.Customer" />
+          <EntitySet Name="Param" EntityType="ECTunes.Database.Config.Param" />
+          <EntitySet Name="Signal" EntityType="ECTunes.Database.Config.Signal" />
+          <AssociationSet Name="FK__Car__customerId__00551192" Association="ECTunes.Database.Config.FK__Car__customerId__00551192">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Param__carId__03317E3D" Association="ECTunes.Database.Config.FK__Param__carId__03317E3D">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Param" EntitySet="Param" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Signal__carId__07F6335A" Association="ECTunes.Database.Config.FK__Signal__carId__07F6335A">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Signal" EntitySet="Signal" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="carId" />
+          </Key>
+          <Property Name="customerId" Type="Int32" Nullable="false" />
+          <Property Name="carId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="version" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="ECTunes.Database.Config.FK__Car__customerId__00551192" FromRole="Car" ToRole="Customer" />
+          <NavigationProperty Name="Param" Relationship="ECTunes.Database.Config.FK__Param__carId__03317E3D" FromRole="Car" ToRole="Param" />
+          <NavigationProperty Name="Signal" Relationship="ECTunes.Database.Config.FK__Signal__carId__07F6335A" FromRole="Car" ToRole="Signal" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="customerId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Car" Relationship="ECTunes.Database.Config.FK__Car__customerId__00551192" FromRole="Customer" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Param">
+          <Key>
+            <PropertyRef Name="carId" />
+            <PropertyRef Name="path" />
+          </Key>
+          <Property Name="carId" Type="Int32" Nullable="false" />
+          <Property Name="path" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="subPath" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="value" Type="Int32" />
+          <NavigationProperty Name="Car" Relationship="ECTunes.Database.Config.FK__Param__carId__03317E3D" FromRole="Param" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Signal">
+          <Key>
+            <PropertyRef Name="carId" />
+            <PropertyRef Name="signalId" />
+          </Key>
+          <Property Name="carId" Type="Int32" Nullable="false" />
+          <Property Name="signalId" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="startbit" Type="Int32" Nullable="false" />
+          <Property Name="size" Type="Int32" Nullable="false" />
+          <Property Name="format" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="signed" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="factor" Type="Double" />
+          <Property Name="offset" Type="Int32" />
+          <Property Name="min" Type="Double" />
+          <Property Name="max" Type="Int32" />
+          <Property Name="match" Type="Int32" />
+          <NavigationProperty Name="Car" Relationship="ECTunes.Database.Config.FK__Signal__carId__07F6335A" FromRole="Signal" ToRole="Car" />
+        </EntityType>
+        <Association Name="FK__Car__customerId__00551192">
+          <End Role="Customer" Type="ECTunes.Database.Config.Customer" Multiplicity="1" />
+          <End Role="Car" Type="ECTunes.Database.Config.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="customerId" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Param__carId__03317E3D">
+          <End Role="Car" Type="ECTunes.Database.Config.Car" Multiplicity="1" />
+          <End Role="Param" Type="ECTunes.Database.Config.Param" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="carId" />
+            </Principal>
+            <Dependent Role="Param">
+              <PropertyRef Name="carId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Signal__carId__07F6335A">
+          <End Role="Car" Type="ECTunes.Database.Config.Car" Multiplicity="1" />
+          <End Role="Signal" Type="ECTunes.Database.Config.Signal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="carId" />
+            </Principal>
+            <Dependent Role="Signal">
+              <PropertyRef Name="carId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ECTunesDatabaseConfigStoreContainer" CdmEntityContainer="ECTunesDatabaseConfig">
+          <EntitySetMapping Name="Car">
+            <EntityTypeMapping TypeName="ECTunes.Database.Config.Car">
+              <MappingFragment StoreEntitySet="Car">
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="carId" ColumnName="carId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="version" ColumnName="version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="ECTunes.Database.Config.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Param">
+            <EntityTypeMapping TypeName="ECTunes.Database.Config.Param">
+              <MappingFragment StoreEntitySet="Param">
+                <ScalarProperty Name="carId" ColumnName="carId" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="subPath" ColumnName="subPath" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Signal">
+            <EntityTypeMapping TypeName="ECTunes.Database.Config.Signal">
+              <MappingFragment StoreEntitySet="Signal">
+                <ScalarProperty Name="carId" ColumnName="carId" />
+                <ScalarProperty Name="signalId" ColumnName="signalId" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="startbit" ColumnName="startbit" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="format" ColumnName="format" />
+                <ScalarProperty Name="signed" ColumnName="signed" />
+                <ScalarProperty Name="factor" ColumnName="factor" />
+                <ScalarProperty Name="offset" ColumnName="offset" />
+                <ScalarProperty Name="min" ColumnName="min" />
+                <ScalarProperty Name="max" ColumnName="max" />
+                <ScalarProperty Name="match" ColumnName="match" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
